@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title_block %}Home{% endblock title_block %}
+
+
+{% block body_block %}
+{% if user.is_authenticated %}
+<h6>{{user.first_name}} {{user.last_name}} as a {{user.account_user.account_type}}</h6>
+{% endif %}
+
+
+
+{% if user.account_user.account_type.account_type == "Teacher" %}
+
+{% endif %}
+
+
+<div class="row mt-5">
+
+    <!-- Grid column -->
+    <div class="col-md-2">
+        <!-- Exaple 1 -->
+        <div class="card ">
+            <h5 class="m-2 text-center">Category</h5>
+            <div class="list-group">
+
+
+                {% for category in categories %}
+
+                <a href="{% url "searchByCategory" category.pk %}" class="list-group-item list-group-item-action">
+                    {{category.name}}</a>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <div class="col-md-10">
+        <div class=" example-1 scrollbar-ripe-malinka">
+            <div id="cartItem">
+                <div class="row">
+                    {% if categoryArticles %}
+                    {% for article in categoryArticles %}
+
+
+                    <div class="col-6 mb-3">
+                        <img src="{{article.article_image.url}}" alt="{{article.title}}" class="img-fluid"
+                            style="width: 550px; height: 350px;">
+                        <small>Created By @{{article.user.first_name}} {{article.user.last_name}}</small>
+                        <a href="{% url "articleDetails" article.slug  %}" class="text-decoration-none text-dark">
+                            <h6 class="mt-1">{{article.title}}</h6>
+                        </a>
+                    </div>
+
+
+                    {% endfor %}
+                    {% else %}
+                    {% for article in articles %}
+
+
+                    <div class="col-6 mb-3">
+                        <img src="{{article.article_image.url}}" alt="{{article.title}}" class="img-fluid"
+                            style="width: 550px; height: 350px;">
+                        <small>Created By @{{article.user.first_name}} {{article.user.last_name}}</small>
+                        <a href="{% url "articleDetails" article.slug  %}" class="text-decoration-none text-dark">
+                            <h6 class="mt-1">{{article.title}}</h6>
+                        </a>
+                    </div>
+
+
+                    {% endfor %}
+
+                    {% endif %}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+{% endblock body_block %}

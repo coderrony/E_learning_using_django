@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %}Quiz Test{% endblock title_block %}
+
+{% block body_block %}
+
+{% if resultArr %}
+
+
+
+{% for arr in resultArr %}
+
+
+<h5>{{forloop.counter}}. {{arr.quiz.question}}</h5>
+
+{% if arr.submission == True %}
+
+<!--option1 check start-->
+{% if arr.quiz.correct_answer == arr.quiz.option1 %}
+<div class="form-check">
+    <input class="form-check-input" type="radio" checked>
+    <label class="form-check-label bg-success text-white p-1">
+        {{arr.quiz.option1}}
+    </label>
+</div>
+
+{% else %}
+<div class="form-check">
+    <input class="form-check-input" type="radio">
+    <label class="form-check-label">
+        {{arr.quiz.option1}}
+    </label>
+</div>
+
+{% endif %}
+<!--option1 check End-->
+
+<!--option2 check start-->
+{% if arr.quiz.correct_answer == arr.quiz.option2 %}
+<div class="form-check">
+    <input class="form-check-input" type="radio" checked>
+    <label class="form-check-label bg-success text-white p-1">
+        {{arr.quiz.option2}}
+    </label>
+</div>
+
+{% else %}
+<div class="form-check">
+    <input class="form-check-input" type="radio">
+    <label class="form-check-label">
+        {{arr.quiz.option2}}
+    </label>
+</div>
+
+{% endif %}
+<!--option2 check End-->
+
+<!--option3 check start-->
+{% if arr.quiz.correct_answer == arr.quiz.option3 %}
+<div class="form-check">
+    <input class="form-check-input" type="radio" checked>
+    <label class="form-check-label bg-success text-white p-1">
+        {{arr.quiz.option3}}
+    </label>
+</div>
+
+{% else %}
+<div class="form-check">
+    <input class="form-check-input" type="radio">
+    <label class="form-check-label">
+        {{arr.quiz.option3}}
+    </label>
+</div>
+
+{% endif %}
+<!--option3 check End-->
+
+{% else %}
+
+<!--else option1 check start-->
+{% if arr.submission == arr.quiz.option1 %}
+<div class="form-check">
+    <input class="form-check-input" type="radio" checked>
+    <label class="form-check-label bg-danger text-white p-1">
+        {{arr.quiz.option1}}
+    </label>
+</div>
+
+{% else %}
+
+{% if arr.quiz.correct_answer == arr.quiz.option1 %}
+<div class="form-check">
+    <input class="form-check-input" type="radio" checked>
+    <label class="form-check-label bg-success text-white p-1">
+        {{arr.quiz.option1}}
+    </label>
+</div>
+{% else %}
+<div class="form-check">
+    <input class="form-check-input" type="radio">
+    <label class="form-check-label">
+        {{arr.quiz.option1}}
+    </label>
+</div>
+{% endif %}
+
+
+{% endif %}
+
+<!--else option1 check End-->
+
+<!--else option2 check start-->
+{% if arr.submission == arr.quiz.option2 %}
+<div class="form-check">
+    <input class="form-check-input" type="radio" checked>
+    <label class="form-check-label bg-danger text-white p-1">
+        {{arr.quiz.option2}}
+    </label>
+</div>
+
+{% else %}
+{% if arr.quiz.correct_answer == arr.quiz.option2 %}
+<div class="form-check">
+    <input class="form-check-input" type="radio" checked>
+    <label class="form-check-label bg-success text-white p-1">
+        {{arr.quiz.option2}}
+    </label>
+</div>
+{% else %}
+<div class="form-check">
+    <input class="form-check-input" type="radio">
+    <label class="form-check-label">
+        {{arr.quiz.option2}}
+    </label>
+</div>
+{% endif %}
+
+{% endif %}
+<!--else option2 check End-->
+
+<!--else option3 check Start-->
+{% if arr.submission == arr.quiz.option3 %}
+<div class="form-check">
+    <input class="form-check-input" type="radio" checked>
+    <label class="form-check-label bg-danger text-white p-1">
+        {{arr.quiz.option3}}
+    </label>
+</div>
+
+{% else %}
+{% if arr.quiz.correct_answer == arr.quiz.option3 %}
+<div class="form-check">
+    <input class="form-check-input" type="radio" checked>
+    <label class="form-check-label bg-success text-white p-1">
+        {{arr.quiz.option3}}
+    </label>
+</div>
+{% else %}
+<div class="form-check">
+    <input class="form-check-input" type="radio">
+    <label class="form-check-label">
+        {{arr.quiz.option3}}
+    </label>
+</div>
+{% endif %}
+
+
+{% endif %}
+<!--else option3 check End-->
+
+
+{% endif %}
+<br>
+
+{% endfor %}
+
+<a href="{% url "home" %}" class="btn btn-primary btn-lg">Continue</a>
+
+<!--Test Quiz Start-->
+
+{% else %}
+
+<h5 class="text-center text-danger">*** Quiz Test *** </h5>
+
+<form action="{% url "quizResult" teacherArticle.user.pk teacherArticle.slug  %}" method="POST">
+    {% csrf_token %}
+    {% for article  in article_quizzes  %}
+
+    <h6>{{forloop.counter}}. {{article.question}}</h6>
+
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios{{forloop.counter}}" id="exampleRadios1"
+            value="{{article.option1}}">
+        <label class="form-check-label">
+            {{article.option1}}
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios{{forloop.counter}}" id="exampleRadios2"
+            value=" {{article.option2}}">
+        <label class="form-check-label">
+            {{article.option2}}
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios{{forloop.counter}}" id="exampleRadios2"
+            value="{{article.option3}}">
+        <label class="form-check-label">
+            {{article.option3}}
+        </label>
+    </div>
+    <br>
+    {% endfor %}
+
+    <input type="submit" class="btn btn-info mt-3" value="Submit">
+</form>
+
+{% endif %}
+
+{% endblock body_block %}
